@@ -276,8 +276,8 @@
 
 
 //    module.exports = {
-//        Casino,
-//        SlotMachine
+//        casino: Casino,
+//        slotMachine: SlotMachine
 //    };
 
 
