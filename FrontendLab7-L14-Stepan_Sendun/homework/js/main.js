@@ -88,36 +88,39 @@
             return this;
         }
 
-        this.deleteMachine = function (id) {
+        this.deleteMachine = function (id) {          
+            if (this.machines.length !== 1) {
+                var moneyFromDeletedMachine;
+                var moneyToAdd;
+                var notRounded;
+                var rest;
+                var indexOfDeletedMachine;
+                this.machines.forEach(function (el, index) {
 
-            var moneyFromDeletedMachine;
-            var moneyToAdd;
-            var notRounded;
-            var rest;
-            var indexOfDeletedMachine;
-            this.machines.forEach(function (el, index) {
+                    if (el['uniqId'] === id) {
+                        indexOfDeletedMachine = index;
+                        moneyFromDeletedMachine = el['money'];
 
-                if (el['uniqId'] === id) {
-                    indexOfDeletedMachine = index;
-                    moneyFromDeletedMachine = el['money'];
+                    }
 
-                }
-
-            })
-            this.machines.splice(indexOfDeletedMachine, 1);
-
-
-            if (!moneyFromDeletedMachine) {
-                console.log(`Machines with id ${id} doesn't exist!`);
-            } else {
-                notRounded = moneyFromDeletedMachine / this.machines.length;
-                moneyToAdd = Math.round(moneyFromDeletedMachine / this.machines.length);
-                rest = notRounded - moneyToAdd;
-                this.machines.forEach(function (el) {
-                    el['money'] += moneyToAdd;
                 })
-                this.machines[0]['money'] += rest * this.machines.length;
-                console.log(`The machine with id ${id} has been successfully deleted!`);
+                this.machines.splice(indexOfDeletedMachine, 1);
+
+
+                if (!moneyFromDeletedMachine) {
+                    console.log(`Machines with id ${id} doesn't exist!`);
+                } else {
+                    notRounded = moneyFromDeletedMachine / this.machines.length;
+                    moneyToAdd = Math.round(moneyFromDeletedMachine / this.machines.length);
+                    rest = notRounded - moneyToAdd;
+                    this.machines.forEach(function (el) {
+                        el['money'] += moneyToAdd;
+                    })
+                    this.machines[0]['money'] += rest * this.machines.length;
+                    console.log(`The machine with id ${id} has been successfully deleted!`);
+                }
+            } else {
+                console.log(`You have deleted all machines! You got ${this.machines[0]['money']}$ from the last machine!`);
             }
 
             return this;
@@ -264,21 +267,22 @@
     //Invocation Example:
 
     var game = new Casino(7, 59782);
-
-    game.getTotalMoneyInCasino().getNumberOfMachinesInCasino().deleteMachine(2).getNumberOfMachinesInCasino().setNewMachine().getTotalMoneyInCasino().takeMoneyFromCasino(2565).getTotalMoneyInCasino();
-
-    game.machines[0].getTotalMoneyInMachine().putMoney(5833).getTotalMoneyInMachine().takeMoney(2658).getTotalMoneyInMachine().play(2015);
-
-//===========================================================================================================================================================
+        
+    // game.getTotalMoneyInCasino().getNumberOfMachinesInCasino().deleteMachine(2).getNumberOfMachinesInCasino().setNewMachine().getTotalMoneyInCasino().takeMoneyFromCasino(2565).getTotalMoneyInCasino();
+    //
+    //    game.machines[0].getTotalMoneyInMachine().putMoney(5833).getTotalMoneyInMachine().takeMoney(2658).getTotalMoneyInMachine().play(2015);
 
 
+    //===========================================================================================================================================================
 
 
 
-//    module.exports = {
-//        Casino,
-//        SlotMachine
-//    };
+
+
+    //    module.exports = {
+    //        Casino,
+    //        SlotMachine
+    //    };
 
 
 
